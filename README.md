@@ -26,11 +26,11 @@ inputs:
     inputs:
       nixpkgs:
         follows: nixpkgs
-  rust-base:
-    url: github:Alb-O/rust-base-devenv-polyrepo
+  rust-env:
+    url: github:Alb-O/rust-env
     flake: false
 imports:
-  - rust-base
+  - rust-env
 ```
 
 Then run:

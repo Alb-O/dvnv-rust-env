@@ -43,7 +43,7 @@ in
     '';
   };
 
-  agentsInstructions.ownFragments.rust-base = [ baseAgentsText ];
+  agentsInstructions.ownFragments.rust-env = [ baseAgentsText ];
   agentsInstructions.mergedFragments = lib.mkBefore [ baseAgentsText ];
 
   outputs.rust-toolchain = config.languages.rust.toolchainPackage;
