@@ -2,6 +2,11 @@
 
 Reusable Rust nightly base environment for polyrepo setups using `devenv` v2.
 
+This base is intended for practical backend/CLI Rust repos that need:
+- consistent nightly toolchain + components
+- consistent lint/test/format scripts
+- consistent cross-target checks
+
 ## Includes
 
 - Nightly toolchain from `rust-toolchain.toml`
@@ -32,3 +37,6 @@ Then run:
 ```bash
 devenv test
 ```
+
+Example consumer using this base:
+- `Alb-O/rust-polyrepo-consumer-demo` (`order-quote-cli`)
