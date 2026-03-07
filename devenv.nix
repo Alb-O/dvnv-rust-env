@@ -1,5 +1,8 @@
 { pkgs, config, lib, ... }:
 
+let
+  baseAgentsText = builtins.readFile ./AGENTS.md;
+in
 {
   languages.rust = {
     enable = true;
@@ -40,7 +43,11 @@
     '';
   };
 
+  agentsInstructions.ownFragments.rust-base = [ baseAgentsText ];
+  agentsInstructions.mergedFragments = lib.mkBefore [ baseAgentsText ];
+
   outputs.rust-toolchain = config.languages.rust.toolchainPackage;
+  outputs.rust-agents = pkgs.writeText "rust-base-agents.md" baseAgentsText;
 
   enterTest = ''
     set -euo pipefail

@@ -1,5 +1,16 @@
 {
   "nodes": {
+    "agents-instructions-builder": {
+      "flake": false,
+      "locked": {
+        "path": "/home/albert/devenv/repos/agents-instructions-builder",
+        "type": "path"
+      },
+      "original": {
+        "path": "/home/albert/devenv/repos/agents-instructions-builder",
+        "type": "path"
+      }
+    },
     "devenv": {
       "locked": {
         "dir": "src/modules",
@@ -55,6 +66,7 @@
     },
     "root": {
       "inputs": {
+        "agents-instructions-builder": "agents-instructions-builder",
         "devenv": "devenv",
         "nixpkgs": "nixpkgs",
         "rust-overlay": "rust-overlay"
