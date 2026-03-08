@@ -1,8 +1,8 @@
 [package]
-name = "rust-env-smoke"
+name = "env-rust-smoke"
 version = "0.1.0"
 edition = "2024"
 
 [lib]
-name = "rust_env_smoke"
+name = "env_rust_smoke"
 path = "src/lib.rs"

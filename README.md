@@ -2,45 +2,34 @@
 
 Reusable Rust nightly base environment for polyrepo setups using `devenv` v2.
 
-This base is intended for practical backend/CLI Rust repos that need:
-- consistent nightly toolchain + components
-- consistent lint/test/format scripts
-- consistent cross-target checks
-
 ## Includes
 
 - Nightly toolchain from `rust-toolchain.toml`
 - Components: `cargo`, `clippy`, `rustfmt`, `rust-analyzer`, `rust-src`, `llvm-tools-preview`
 - Targets: `wasm32-unknown-unknown`, `x86_64-unknown-linux-musl`, `aarch64-unknown-linux-gnu`
+- Treefmt: enabled with `rustfmt` program
+- Git hooks: pre-commit `treefmt` hook enabled
 - Scripts: `fmt`, `fmt-check`, `lint`, `check`, `run-tests`, `check-targets`, `ci`
 - Outputs: `outputs.rust-toolchain`, `outputs.rust-agents`
 
-## Use from another repo
+## Use
 
 ```yaml
 inputs:
-  nixpkgs:
-    url: github:cachix/devenv-nixpkgs/rolling
-  rust-overlay:
-    url: github:oxalica/rust-overlay
-    inputs:
-      nixpkgs:
-        follows: nixpkgs
-  rust-env:
-    url: github:Alb-O/rust-env
+  env-rust:
+    url: github:Alb-O/env-rust
     flake: false
 imports:
-  - rust-env
+  - env-rust
 ```
 
-Then run:
+## Consumer treefmt overrides
 
-```bash
-devenv test
+Consumers can extend the shared Rust formatting by adding extra programs under `treefmt.config`.
+This merges with `env-rust` defaults (for example, `rustfmt` stays enabled):
+
+```nix
+{
+  treefmt.config.programs.mdformat.enable = true;
+}
 ```
-
-For instruction merging/materialization, pair this repo with:
-- `github:Alb-O/materializer`
-
-Example app using this base:
-- `Alb-O/rust-app` (`order-quote-cli`)

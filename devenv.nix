@@ -13,6 +13,7 @@ let
       "${fromHome}/.cache"
     else
       "/tmp";
+  treefmtBin = lib.getExe config.treefmt.config.build.wrapper;
 in
 {
   env.CARGO_BUILD_BUILD_DIR = "${xdgCacheHome}/cargo/targets";
@@ -21,6 +22,19 @@ in
     enable = true;
     toolchainFile = ./rust-toolchain.toml;
     lsp.enable = true;
+  };
+
+  treefmt = {
+    enable = lib.mkDefault true;
+    config.programs.rustfmt.enable = lib.mkDefault true;
+  };
+
+  git-hooks = lib.mkIf config.treefmt.enable {
+    hooks.treefmt = {
+      enable = lib.mkDefault true;
+      packageOverrides.treefmt = config.treefmt.config.build.wrapper;
+      settings.formatters = builtins.attrValues config.treefmt.config.build.programs;
+    };
   };
 
   packages =
@@ -35,8 +49,8 @@ in
     ];
 
   scripts = {
-    fmt.exec = "cargo fmt --all";
-    fmt-check.exec = "cargo fmt --all --check";
+    fmt.exec = treefmtBin;
+    fmt-check.exec = "${treefmtBin} --fail-on-change";
     lint.exec = "cargo clippy --workspace --all-targets --all-features -- -D warnings";
     run-tests.exec = "cargo test --workspace --all-targets --all-features";
     check.exec = "cargo check --workspace --all-targets --all-features";
@@ -56,8 +70,7 @@ in
     '';
   };
 
-  materializer.ownFragments.rust-env = [ baseAgentsText ];
-  materializer.mergedFragments = lib.mkAfter [ baseAgentsText ];
+  instructions.fragments = lib.mkAfter [ baseAgentsText ];
 
   outputs.rust-toolchain = config.languages.rust.toolchainPackage;
 

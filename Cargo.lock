@@ -3,5 +3,5 @@
 version = 4
 
 [[package]]
-name = "rust-env-smoke"
+name = "env-rust-smoke"
 version = "0.1.0"
