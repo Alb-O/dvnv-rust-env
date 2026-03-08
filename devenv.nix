@@ -44,7 +44,7 @@ in
   };
 
   materializer.ownFragments.rust-env = [ baseAgentsText ];
-  materializer.mergedFragments = lib.mkBefore [ baseAgentsText ];
+  materializer.mergedFragments = lib.mkAfter [ baseAgentsText ];
 
   outputs.rust-toolchain = config.languages.rust.toolchainPackage;
 
