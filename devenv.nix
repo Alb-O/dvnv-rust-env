@@ -1,7 +1,6 @@
 { pkgs, config, lib, ... }:
 
 let
-  baseAgentsText = builtins.readFile ./AGENTS.md;
   xdgCacheHome =
     let
       fromXdg = builtins.getEnv "XDG_CACHE_HOME";
@@ -117,7 +116,7 @@ in
     '';
   };
 
-  instructions.fragments = lib.mkAfter [ baseAgentsText ];
+  instructions.fragments = lib.mkAfter [ (builtins.readFile ./AGENTS.md) ];
 
   outputs.rust-toolchain = config.languages.rust.toolchainPackage;
 
