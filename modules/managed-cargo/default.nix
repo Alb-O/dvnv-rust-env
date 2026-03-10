@@ -6,7 +6,7 @@
 }:
 
 let
-  cfg = config."rust-env".managedCargo;
+  cfg = config.rustEnv.managedCargo;
   managedCargoEnabled = cfg.enable;
   managedCargoMergeScript = ./merge-managed-cargo.py;
   managedCargoTomlFormat = pkgs.formats.toml { };
@@ -15,8 +15,8 @@ let
     # GENERATED FILE: DO NOT EDIT DIRECTLY
     #
     # This Cargo.toml is materialized by devenv from:
-    # - the shared crate catalog configured by `rust-env.managedCargo.catalogPath`
-    # - this repo's dependency spec at `rust-env.managedCargo.specPath`
+    # - the shared crate catalog configured by `rustEnv.managedCargo.catalogPath`
+    # - this repo's dependency spec at `rustEnv.managedCargo.specPath`
     #
     # To change crates.io dependency versions:
     # - edit the shared catalog, not this file
@@ -93,7 +93,7 @@ let
       null;
 in
 {
-  options."rust-env".managedCargo = {
+  options.rustEnv.managedCargo = {
     enable = lib.mkOption {
       type = lib.types.bool;
       default = false;
@@ -130,11 +130,11 @@ in
       assertions = lib.optionals managedCargoEnabled [
         {
           assertion = builtins.pathExists managedCargoSpecPath;
-          message = "rust-env.managedCargo.enable is true but specPath does not exist: ${managedCargoSpecPath}";
+          message = "rustEnv.managedCargo.enable is true but specPath does not exist: ${managedCargoSpecPath}";
         }
         {
           assertion = builtins.pathExists managedCargoSourcePath;
-          message = "rust-env.managedCargo.enable is true but sourcePath does not exist: ${managedCargoSourcePath}";
+          message = "rustEnv.managedCargo.enable is true but sourcePath does not exist: ${managedCargoSourcePath}";
         }
       ];
 

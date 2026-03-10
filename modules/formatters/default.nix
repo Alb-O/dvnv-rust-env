@@ -6,7 +6,7 @@
 }:
 
 let
-  managedCargoCfg = config."rust-env".managedCargo;
+  managedCargoCfg = config.rustEnv.managedCargo;
   rustfmtConfigPath = ../../cargo/rustfmt.toml;
   resolveFromRoot = path: if lib.hasPrefix "/" path then path else "${config.devenv.root}/${path}";
   # treefmt can only match files under the current repo root. Reduce the managed

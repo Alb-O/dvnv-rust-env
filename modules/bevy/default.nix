@@ -6,10 +6,10 @@
 }:
 
 let
-  cfg = config."rust-env".bevy;
+  cfg = config.rustEnv.bevy;
 in
 {
-  options."rust-env".bevy = {
+  options.rustEnv.bevy = {
     enable = lib.mkOption {
       type = lib.types.bool;
       default = false;

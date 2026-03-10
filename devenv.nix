@@ -7,7 +7,7 @@
 }:
 
 let
-  cfg = config."rust-env";
+  cfg = config.rustEnv;
   managedCargoCfg = cfg.managedCargo;
   xdgCacheHome =
     let
@@ -34,7 +34,7 @@ in
     ./modules/managed-cargo
   ];
 
-  options."rust-env" = {
+  options.rustEnv = {
     separateCargoBuildDirByRepo = lib.mkOption {
       type = lib.types.bool;
       default = false;

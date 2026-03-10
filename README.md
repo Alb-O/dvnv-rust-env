@@ -43,7 +43,7 @@ By default, Cargo build artifacts go to `targets` under `XDG_CACHE_HOME`:
 
 ```nix
 {
-  "rust-env".separateCargoBuildDirByRepo = false;
+  rustEnv.separateCargoBuildDirByRepo = false;
 }
 ```
 
@@ -51,7 +51,7 @@ Set the option below to isolate artifacts per repo in `targets/<repoDir>`:
 
 ```nix
 {
-  "rust-env".separateCargoBuildDirByRepo = true;
+  rustEnv.separateCargoBuildDirByRepo = true;
 }
 ```
 
@@ -62,17 +62,17 @@ Enable this when you want each Rust repo to own manifest intent in
 
 ```nix
 {
-  "rust-env".managedCargo.enable = true;
+  rustEnv.managedCargo.enable = true;
 }
 ```
 
 Available options:
 
-- `"rust-env".managedCargo.enable`
-- `"rust-env".managedCargo.catalogPath`
-- `"rust-env".managedCargo.specPath`
-- `"rust-env".managedCargo.outputPath`
-- `"rust-env".managedCargo.sourcePath`
+- `rustEnv.managedCargo.enable`
+- `rustEnv.managedCargo.catalogPath`
+- `rustEnv.managedCargo.specPath`
+- `rustEnv.managedCargo.outputPath`
+- `rustEnv.managedCargo.sourcePath`
 
 When enabled:
 
@@ -81,7 +81,7 @@ When enabled:
 - `outputs.cargo_source_tree` exposes a build-ready source tree with the generated `Cargo.toml` injected
 - `outputs.rust_deps_catalog` exposes the resolved shared catalog
 - virtual workspace roots are supported, including `[workspace.dependencies]`
-- treefmt `cargo-sort` also formats the configured `rust-env.managedCargo.specPath` when it is inside the repo root
+- treefmt `cargo-sort` also formats the configured `rustEnv.managedCargo.specPath` when it is inside the repo root
 
 Preferred `Cargo.dvnv.toml` style uses regular dependency tables with inline
 tables or `true`, rather than one `[dependencies.<crate>]` block per crate:
@@ -107,7 +107,7 @@ Enable this when a Rust repo needs the standard Linux Bevy shell/runtime setup:
 
 ```nix
 {
-  "rust-env".bevy.enable = true;
+  rustEnv.bevy.enable = true;
 }
 ```
 
@@ -116,5 +116,5 @@ When enabled:
 - `LD_LIBRARY_PATH` includes the shared Bevy runtime libraries plus `/run/opengl-driver/lib`
 - the shell gets the shared Bevy runtime libraries, `pkg-config`, and `udev`
 - consumers can reuse the same package-build inputs through:
-  - `"rust-env".bevy.runtimeLibs`
-  - `"rust-env".bevy.nativeBuildInputs`
+  - `rustEnv.bevy.runtimeLibs`
+  - `rustEnv.bevy.nativeBuildInputs`
