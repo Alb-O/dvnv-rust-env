@@ -10,7 +10,8 @@ Reusable Rust nightly base environment for polyrepo setups using `devenv` v2.
 - Treefmt: enabled with `rustfmt` program using `cargo/rustfmt.toml`
 - Git hooks: pre-commit `treefmt` hook enabled
 - Scripts: `fmt`, `fmt-check`, `lint`, `check`, `run-tests`, `check-targets`, `ci`
-- Outputs: `outputs.rust-toolchain`, `outputs.rust-agents`
+- Outputs: `outputs.rust-toolchain`
+- Instructions: exports `AGENTS.md` through `instructions.instructions` for composer consumers
 - Optional managed Cargo manifest generation from `modules/managed-cargo/`
 
 ## Use

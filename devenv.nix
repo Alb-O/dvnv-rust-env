@@ -102,6 +102,10 @@ in
         }
       ];
 
+      # Consumers that also import dvnv-instructions-composer should inherit the
+      # shared Rust coding guidance automatically via instructions composition.
+      instructions.instructions = lib.mkAfter [ (builtins.readFile ./AGENTS.md) ];
+
       enterTest = ''
         set -euo pipefail
 
