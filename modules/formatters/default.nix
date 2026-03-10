@@ -96,12 +96,11 @@ in
       config = {
         programs.rustfmt.enable = lib.mkDefault true;
         settings.formatter.rustfmt.options = [
+          # treefmt already supplies rustfmt's edition/skip-children flags.
+          # Only point it at the shared config file here, or the wrapper ends
+          # up passing duplicate options during `devenv shell`.
           "--config-path"
           (toString rustfmtConfigPath)
-          "--config"
-          "skip_children=true"
-          "--edition"
-          "2024"
         ];
         settings.formatter.cargo-sort = {
           command = "${cargoSortWrapper}/bin/cargo-sort-wrapper";

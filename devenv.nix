@@ -48,6 +48,12 @@ in
     {
       env.CARGO_BUILD_BUILD_DIR = cargoBuildDir;
 
+      files = {
+        ".cargo/config.toml".source = ./cargo/config.toml;
+        "rust-toolchain.toml".source = ./cargo/rust-toolchain.toml;
+        "rustfmt.toml".source = ./cargo/rustfmt.toml;
+      };
+
       languages.rust = {
         enable = true;
         toolchainFile = ./cargo/rust-toolchain.toml;
