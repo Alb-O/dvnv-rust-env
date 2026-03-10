@@ -12,7 +12,10 @@ let
       "${fromHome}/.cache"
     else
       "/tmp";
-  repoDir = builtins.baseNameOf config.git.root;
+  repoDir = baseNameOf config.git.root;
+  cargoBuildDir =
+    "${xdgCacheHome}/cargo/targets"
+    + lib.optionalString config."rust-env".separateCargoBuildDirByRepo "/${repoDir}";
   treefmtBin = lib.getExe config.treefmt.config.build.wrapper;
   cargoSortWrapper = pkgs.writeShellScriptBin "cargo-sort-wrapper" ''
     set -euo pipefail
@@ -33,7 +36,16 @@ let
   '';
 in
 {
-  env.CARGO_BUILD_BUILD_DIR = "${xdgCacheHome}/cargo/targets/${repoDir}";
+  options."rust-env".separateCargoBuildDirByRepo = lib.mkOption {
+    type = lib.types.bool;
+    default = false;
+    description = ''
+      Store Cargo build artifacts under a repo-specific subdirectory inside
+      ${xdgCacheHome}/cargo/targets.
+    '';
+  };
+
+  env.CARGO_BUILD_BUILD_DIR = cargoBuildDir;
 
   languages.rust = {
     enable = true;

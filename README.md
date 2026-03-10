@@ -33,3 +33,21 @@ This composes with `dvnv-rust-env` defaults (for example, `rustfmt` stays enable
   treefmt.config.programs.mdformat.enable = true;
 }
 ```
+
+## Cargo build dir layout
+
+By default, Cargo build artifacts go to `targets` under `XDG_CACHE_HOME`:
+
+```nix
+{
+  "rust-env".separateCargoBuildDirByRepo = false;
+}
+```
+
+Set the option below to isolate artifacts per repo in `targets/<repoDir>`:
+
+```nix
+{
+  "rust-env".separateCargoBuildDirByRepo = true;
+}
+```
