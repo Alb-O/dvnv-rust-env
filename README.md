@@ -82,6 +82,17 @@ When enabled:
 - virtual workspace roots are supported, including `[workspace.dependencies]`
 - treefmt `cargo-sort` also formats the configured `rust-env.managedCargo.specPath` when it is inside the repo root
 
+Preferred `Cargo.dvnv.toml` style uses regular dependency tables with inline
+tables or `true`, rather than one `[dependencies.<crate>]` block per crate:
+
+```toml
+[dependencies]
+serde = { features = ["derive"] }
+serde_json = true
+```
+
+For virtual workspaces, the same shorthand works under `[workspace.dependencies]`.
+
 When `specPath` points outside the current repo root, managed Cargo now skips
 local `Cargo.toml` materialization automatically while still exposing the
 generated manifest and source-tree outputs for downstream packaging.

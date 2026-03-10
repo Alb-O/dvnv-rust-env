@@ -119,7 +119,7 @@ in
         ''}
       '';
     }
-    (lib.mkIf (options ? instructions && options.instructions ? instructions) {
+    (lib.optionalAttrs (options ? instructions && options.instructions ? instructions) {
       # `instructions.instructions` is declared by composer/agent-style modules,
       # not by devenv itself. Guard this assignment so plain Rust-env consumers
       # that do not import those modules still evaluate successfully.
