@@ -74,7 +74,7 @@ in
 
     catalogPath = lib.mkOption {
       type = lib.types.str;
-      default = toString ./cargo-catalog.toml;
+      default = toString ./Cargo.catalog.toml;
       description = "Path to the shared crate version catalog TOML.";
     };
 
