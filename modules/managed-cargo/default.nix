@@ -2,6 +2,7 @@
   pkgs,
   config,
   lib,
+  inputs ? { },
   ...
 }:
 
@@ -10,22 +11,9 @@ let
   managedCargoEnabled = cfg.enable;
   managedCargoMergeScript = ./merge-managed-cargo.py;
   managedCargoTomlFormat = pkgs.formats.toml { };
-  managedCargoHeader = ''
-    # ---------------------------------------------------------------------------
-    # GENERATED FILE: DO NOT EDIT DIRECTLY
-    #
-    # This Cargo.toml is materialized by devenv from:
-    # - the shared crate catalog configured by `rustEnv.managedCargo.catalogPath`
-    # - this repo's dependency spec at `rustEnv.managedCargo.specPath`
-    #
-    # To change crates.io dependency versions:
-    # - edit the shared catalog, not this file
-    #
-    # To change this repo's dependency/features/package metadata:
-    # - edit Cargo.poly.toml, then re-enter `devenv shell` or run `devenv test`
-    # ---------------------------------------------------------------------------
-    #
-  '';
+  editablePaths = import ./editable-paths.nix {
+    inherit config inputs lib;
+  };
   resolveFromRoot = path: if lib.hasPrefix "/" path then path else "${config.devenv.root}/${path}";
   pathIsInsideRoot =
     path:
@@ -36,6 +24,24 @@ let
     path == root || lib.hasPrefix rootPrefix path;
   managedCargoCatalogPath = resolveFromRoot cfg.catalogPath;
   managedCargoSpecPath = resolveFromRoot cfg.specPath;
+  managedCargoCatalogEditPath = editablePaths.editablePathFor managedCargoCatalogPath;
+  managedCargoSpecEditPath = editablePaths.editablePathFor managedCargoSpecPath;
+  managedCargoHeader = ''
+    # ---------------------------------------------------------------------------
+    # GENERATED FILE: DO NOT EDIT DIRECTLY
+    #
+    # This Cargo.toml is materialized by devenv from:
+    # - the shared crate catalog at `${managedCargoCatalogEditPath}`
+    # - this repo's dependency spec at `${managedCargoSpecEditPath}`
+    #
+    # To change crates.io dependency versions:
+    # - edit `${managedCargoCatalogEditPath}`, not this file
+    #
+    # To change this repo's dependency/features/package metadata:
+    # - edit `${managedCargoSpecEditPath}`, then re-enter `devenv shell` or run `devenv test`
+    # ---------------------------------------------------------------------------
+    #
+  '';
   managedCargoSourcePath = resolveFromRoot (
     if cfg.sourcePath != null then cfg.sourcePath else builtins.dirOf cfg.specPath
   );
